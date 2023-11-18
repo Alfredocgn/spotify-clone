@@ -3,7 +3,7 @@
 export const Login = () => {
 
   const handleClick = () => {
-    const clientId = "4cf65466c8614575bc221ae642651740";
+    const clientId = "876ca325fd46456ab7d06ca847808d83";
     const redirectUrl="http://localhost:5173/"
     const apiUrl = "https://accounts.spotify.com/authorize";
     const scope = [
