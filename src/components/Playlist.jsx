@@ -24,6 +24,11 @@ export const Playlist = () => {
 
   },[token,dispatch])
 
+  const changeCurrentPlaylist = (selectedPlaylistId) => {
+    dispatch({type:reducerCases.SET_PLAYLIST_ID, selectedPlaylistId})
+
+  }
+
   return (
     <div className='Container h-[100%] overflow-hidden '>
       <ul className='my-4 flex flex-col gap-4 p-4 h-[55vh] max-h-[100%] overflow-auto '>
@@ -32,7 +37,7 @@ export const Playlist = () => {
             
             return (
 
-            <li className='flex items-center gap-4 cursor-pointer transition-all duration-300 ease-in-out hover:text-white text-lg' key={id}>{name}</li>
+            <li className='flex items-center gap-4 cursor-pointer transition-all duration-300 ease-in-out hover:text-white text-lg' onClick={()=> changeCurrentPlaylist(id)} key={id}>{name}</li>
 
             )
           })

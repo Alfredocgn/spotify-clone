@@ -8,7 +8,7 @@ import { reducerCases } from "../utils/Constants"
 
 export const PlayerControls = () => {
     const [{token,playerState,currentPlaying},dispatch] = useStateProvider();
-    console.log(playerState)
+
     const changeTrack = async (type) => {
             await axios.post(
                 `https://api.spotify.com/v1/me/player/${type}`,

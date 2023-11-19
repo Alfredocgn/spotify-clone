@@ -46,6 +46,35 @@ export const Body = ({headerbackground}) => {
     return minutes + ":" + (seconds < 10 ? "0" : "") + seconds ;
   }
 
+  const playTrack = async (id,name,artists,image,context_uri,track_number) => {
+    await axios.put(`https://api.spotify.com/v1/me/player/play`,
+    {
+      context_uri,
+      offset: {
+        position: track_number-1
+      },
+      position_ms:0,
+    },{
+      headers:{
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json"
+      }
+    })
+    if(response.status === 204){
+      const currentPlaying = {
+        id,
+        name,
+        artists,
+        image,
+      }
+      dispatch({type:reducerCases.SET_PLAYING,currentPlaying})
+      dispatch({type:reducerCases.SET_PLAYER_STATE,playerState:true})
+    }else{
+      dispatch({type: reducerCases.SET_PLAYER_STATE,playerState:true})
+    }
+
+  }
+
 
   return (
     <div className='Container ' headerbackground={headerbackground}>
@@ -57,8 +86,8 @@ export const Body = ({headerbackground}) => {
               <img className='h-[15rem]' src={selectedPlaylist.image} alt='selected playlist' />
             </div>
             <div className='details flex flex-col gap-4 text-["#e0dede] '>
-              <span className='type'>PLAYLIST</span>
-              <h2 className='title text-white text-md '>{selectedPlaylist.name}</h2>
+              <span className='type text-white text-xl font-semibold'>PLAYLIST</span>
+              <h2 className='title text-white text-6xl font-bold '>{selectedPlaylist.name}</h2>
               <p className='description'>{selectedPlaylist.description}</p>
             </div>
           </div>
@@ -95,7 +124,7 @@ export const Body = ({headerbackground}) => {
                       index
                       ) => {
                   return (
-                    <div className='row py-2 px-4 grid grid-cols-[0.3fr,3.1fr,1.9fr,0.1fr] hover:bg-[rgba(0,0,0,0.7)] ' key={id}>
+                    <div className='row py-2 px-4 grid grid-cols-[0.3fr,3.1fr,1.9fr,0.1fr] hover:bg-[rgba(0,0,0,0.7)] cursor-pointer ' key={id} onClick={()=> playTrack(id,name,artists,image,context_uri,track_number)}>
                       <div className='col flex items-center text-[#dddcdc] '>
                         <span>{index+1}</span>
                       </div>
